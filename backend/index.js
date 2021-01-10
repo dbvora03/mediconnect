@@ -5,10 +5,7 @@ require('dotenv').config()
 
 //Static variables
 const app = express()
-const PORT = 4000
-
-//Use json as a communicating language
-app.use(express.json())
+const PORT = process.env.PORT || 4000
 
 //mongoose connection
 mongoose.connect(process.env.MONGOURI, {
@@ -19,6 +16,16 @@ mongoose.connect(process.env.MONGOURI, {
 }).catch(err=> {
     console.log(err)
 })
+
+//Import all models
+require("./models/appointmentModel")
+require("./models/doctorModel")
+require("./models/patientModel")
+require("./models/prescriptionModel")
+require("./models/reminderModel")
+
+//Use json as a communicating language
+app.use(express.json())
 
 //Listening on the port
 app.listen(PORT, ()=> {
